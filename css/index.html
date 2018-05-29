@@ -1,0 +1,572 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Building streaming pipelines for neural machine translation</title>
+
+    <meta name="description" content="Building streaming pipelines for neural machine translation">
+    <meta name="author" content="Kellen Sunderland; Suneel Marthi">
+
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/bbuzz17.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+    <!--[if lt IE 9]> <script src="lib/js/html5shiv.js"></script> <![endif]-->
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-background-image="img/brandenburgerTor.jpg">
+          <br/>
+          <br/>
+          <br/>
+          <h3>Building Streaming pipelines for Neural Machine Translation</h3>
+          <br/>
+          <p>Suneel Marthi<br/>
+             Kellen Sunderland
+          </p>
+          <p style="font-size: 60%">April 19, 2018<br/>
+             DataWorks Summit, Berlin, Germany</p>
+        </section>
+				<section data-background-image="img/ZsMwlm2.jpg">
+          <h3>$WhoAreWe</h3>
+          <h6 style='text-align: left; font-size: 80%;'>Kellen Sunderland <br/><span style="font-size: 60%"><i class="fa fa-twitter" aria-hidden="true"></i> @KellenDB</span></h6>
+          <ul style='font-size: 70%;'>
+            <li>Member of Apache Software Foundation</li>
+            <li>Contributor to Apache MXNet (incubating), and committer on Apache Joshua (incubating)</li>
+          </ul>
+          <br/>
+          <h6 style='text-align: left; font-size: 80%;'>Suneel Marthi <br/><span style="font-size: 60%"><i class="fa fa-twitter" aria-hidden="true"></i> @suneelmarthi</span></h6>
+          <ul style='font-size: 70%;'>
+            <li>Member of Apache Software Foundation</li>
+            <li>Committer and PMC on Apache Mahout, Apache OpenNLP, Apache Streams</li>
+          </ul>
+        </section>
+        <section data-background-image="img/ZsMwlm2.jpg">
+          <h3>Agenda</h3>
+          <ul>
+            <li>What is Machine Translation ?</li>
+            <li>Why move to NMT from SMT ?</li>
+            <li>NMT Samples</li>
+            <li>NMT Challenges</li>
+            <li>Streaming Pipelines for NMT</li>
+            <li>Demo</li>
+          </ul>
+        </section>
+        <section data-background-image="img/ZsMwlm2-purpleish.jpg">
+          <h3>OSS Tools</h3>
+          <ul>
+            <li>Apache Flink - A distributed stream processing engine written in Java and Scala.</li>
+            <li>Apache OpenNLP - A machine learning toolkit for Natural Language Processing, written in Java.</li>
+            <li>Apache Thrift - A framework for cross-language services development.</li>
+          </ul>
+        </section>
+        <section data-background-image="img/ZsMwlm2-blueish.jpg">
+          <h3>OSS Tools (contd)</h3>
+          <ul>
+            <li>Apache Joshua (incubating) - A statistical machine translation decoder for phrase-based, hierarchical, and syntax-based machine translation, written in Java.</li>
+            <li>Apache MXNet (incubating) - A flexible and efficient library for deep learning.</li>
+            <li>Sockeye - A sequence-to-sequence framework for Neural Machine Translation based on Apache MXNet Incubating.</li>
+          </ul>
+        </section>
+        <section data-background-image="img/ZsMwlm2-purpleish.jpg">
+            <h3>What is Machine Translation ?</h3>
+        </section>
+        <section data-background-image="img/ZsMwlm2-greenish.jpg">
+           <h3>Statistical Machine Translation</h3>
+            <p style='text-align: left'>Generate Translations from Statistical Models trained on Bilingual Corpora.</p>
+            <p style='text-align: left'>Translation happens per a probability distribution <code>p(e|f)</code></p>
+            <pre><code data-trim data-noescape>E = string in the target language (English)
+
+F = string in the source language (Spanish)
+
+e~ = argmax  p(e|f) = argmax p(f|e) * p(e)
+
+e~ = best translation, the one with highest probability</code></pre>
+        </section>
+        <section data-background-image="img/ZsMwlm2-greenish.jpg">
+            <h3>Word-based Translation</h3>
+        </section>
+        <section data-background-image="img/ZsMwlm2-greenish.jpg">
+            <dl>
+                <dt>How to translate a word &rarr; lookup in dictionary</dt>
+                <dd>Ge­b&auml;u­de — building, house, tower.</dd>
+                <br/>
+                <dt>Multiple translations</dt>
+                <dd>some more frequent than others<br/>
+                    for instance: house and building most common</dd>
+            </dl>
+        </section>
+        <section data-background-image="img/ZsMwlm2-greenish.jpg">
+            <p>Look at a parallel corpus<br/>(German text along with English translation)</p>
+            <table>
+                <thead>
+                <tr>
+                    <th>Translation of Ge­b&auml;u­de</th><th>Count</th><th>Probability</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>house</td><td>5.28 billion</td><td>0.51</td>
+                </tr>
+                <tr>
+                    <td>building</td><td>4.16 billion</td><td>0.402</td>
+                </tr>
+                <tr>
+                    <td>tower</td><td>9.28 million</td><td>0.09</td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+        <section data-background-image="img/ZsMwlm2-yellowish.jpg">
+            <h3>Alignment</h3>
+            <ul>
+                <li>In a parallel text (or when we translate), we align words in one language with the word in the other<br/>
+                    <table>
+                        <tr>
+                            <td>Das</td><td>Geb&auml;ude</td><td>ist</td><td>hoch</td>
+                        </tr>
+                        <tr>
+                            <td style='text-align: center;'>&darr;</td><td style='text-align: center;'>&darr;</td><td style='text-align: center;'>&darr;</td><td style='text-align: center;'>&darr;</td>
+                        </tr>
+                        <tr>
+                            <td>the</td><td>building</td><td>is</td><td>high</td>
+                        </tr>
+                    </table>
+                </li>
+                <li>Word positions are numbered 1&mdash;4</li>
+            </ul>
+        </section>
+        <section data-background-image="img/ZsMwlm2-yellowish.jpg">
+            <h3>Alignment Function</h3>
+            <ul>
+                <li>Define the Alignment with an Alignment Function</li>
+                <li>Mapping an English target word at position <code>i</code> to <code>a</code> German source word at position <code>j</code> with a function <code>a : i &rarr; j</code></li>
+                <li>Example</li>
+            </ul>
+            <pre><code data-trim data-noescape>a : {1 &rarr; 1, 2 &rarr; 2, 3 &rarr; 3, 4 &rarr; 4}</code></pre>
+        </section>
+        <section data-background-image="img/ZsMwlm2-blueish.jpg">
+            <h3>One-to-Many Translation</h3>
+            <p>A source word could translate into multiple target words</p>
+            <table>
+                <tr>
+                    <td>Das</td><td>ist</td><td>ein</td><td colspan='3' style='text-align: center;'>Hochhaus&nbsp;&nbsp;&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style='text-align: center;'>&darr;</td><td style='text-align: center;'>&darr;</td><td style='text-align: center;'>&darr;</td><td style='text-align: center;'>&#8601;</td><td style='text-align: center;'>&darr;</td><td style='text-align: center;'>&#8600;</td>
+                </tr>
+                <tr>
+                    <td>This</td><td>is</td><td>a</td><td>high&nbsp;&nbsp;&nbsp;</td><td>rise</td><td>building</td>
+                </tr>
+            </table>
+        </section>
+        <section data-background-image="img/ZsMwlm2-redish.jpg">
+            <h3>Phrase-based Translation</h3>
+        </section>
+        <section data-background-image="img/ZsMwlm2-redish.jpg">
+            <h3>Phrase-Based Model</h3>
+            <table style='font-size: 80%;'>
+                <tr>
+                    <td>Berlin</td><td>ist</td><td>ein</td><td>herausragendes</td><td>Kunst- und Kulturzentrum</td><td>.</td>
+                </tr>
+                <tr>
+                    <td style='text-align: center;'>&darr;</td><td style='text-align: center;'>&darr;</td><td style='text-align: center;'>&darr;</td><td style='text-align: center;'>&darr;</td><td style='text-align: center;'>&darr;</td><td style='text-align: center;'>&darr;</td>
+                </tr>
+                <tr>
+                    <td>Berlin</td><td>is</td><td>an</td><td>outstanding</td><td>Art and cultural center</td><td>.</td>
+                </tr>
+            </table>
+            <br/>
+            <ul>
+                <li>Foreign input is segmented in phrases</li>
+                <li>Each phrase is translated into English</li>
+                <li>Phrases are reordered</li>
+            </ul>
+        </section>
+        <section data-background-image="img/ZsMwlm2-redish.jpg">
+            <h3>Alignment Function</h3>
+            <ul>
+                <li>Word-Based Models translate words as atomic units</li>
+                <li>Phrase-Based Models translate phrases as atomic units</li>
+                <li>Advantages:</li>
+                <ul>
+                    <li>many-to-many translation can handle non-compositional phrases</li>
+                    <li>use of local context in translation</li>
+                    <li>the more data, the longer phrases can be learned</li>
+                </ul>
+                <li>&ldquo;Standard Model&rdquo;, used by Google Translate until 2016 (switched to Neural MT)</li>
+            </ul>
+        </section>
+        <section data-background-image="img/ZsMwlm2-purpleish.jpg">
+            <h3>Decoding</h3>
+        </section>
+        <section data-background-image="img/ZsMwlm2-purpleish.jpg">
+            <ul>
+                <li>We have a mathematical model for translation <code>p(e|f)</code></li>
+                <li>Task of decoding: find the translation <code>e<sub style="font-size:50%">best</small></sub></code> with highest probability<br/>
+                    <pre><code data-trim data-noescape>e<sub style="font-size:50%">best</sub> = <i>argmax</i> p(e|f)</code></pre>
+                </li>
+                <li>Two types of error</li>
+                <ul>
+                    <li>the most probable translation is bad &rarr; fix the model</li>
+                    <li>search does not find the most probable translation &rarr; fix the search</li>
+                </ul>
+            </ul>
+        </section>
+        <section data-background-image="img/ZsMwlm2-purpleish.jpg">
+            <h3>Neural Machine Translation</h3>
+        </section>
+        <section data-background-image="img/ZsMwlm2-purpleish.jpg">
+          <p style='text-align: left'>Generate Translations from Neural Network models trained on Bilingual Corpora.</p>
+          <p style='text-align: left'>Translation happens per a probability distribution one word at time (no phrases).</p>
+          <div style="background: #c9c9c9;">
+            <img src='img/softmax.png' style='margin: 0px, 20px, 0px, 20px; border: none; background: none;box-shadow: none; '/><br/>
+            <img src='img/cross_entropy.png' style='margin: 0px, 20px, 0px, 20px; border: none; background: none;box-shadow: none; '/>
+          </div>
+       </section>
+        <section data-background-image="img/ZsMwlm2-purpleish.jpg">
+          <p style='text-align: left'>NMT is deep learning applied to machine translation.</p>
+          <img src='img/transformer.png' style='max-width: 25%; margin: 0px, 20px, 0px, 20px; border: none; background: none;box-shadow: none; '/>
+          <p style='font-size: 35%;'>"Attention Is All You Need" - Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, Illia Polosukhin <br/> Google Brain https://arxiv.org/abs/1706.03762</p>
+        </section>
+        <section data-background-image="img/ZsMwlm2-redish.jpg">
+          <h3>Why move from SMT to NMT?</h3>
+          <ul>
+            <li>Research results were too good to ignore.</li>
+            <li>The fluency of translations was a huge step forward compared to statistical systems.</li>
+            <li>We knew that there would be exciting future work to be done in this area.</li>
+          </ul>
+        </section>
+        <section data-background-image="img/ZsMwlm2-redish.jpg">
+          <h3>Why move from SMT to NMT?</h3>
+          <img src='img/wmt.png' style='max-width: 50%; max-height: 50%; border: none; background: none;box-shadow: none; '/>
+          <p style='font-size: 50%;'>The University of Edinburgh’s Neural MT Systems for WMT17 – Rico Sennrich, Alexandra Birch, Anna Currey, Ulrich Germann, Barry Haddow, Kenneth Heafield, Antonio Valerio Miceli Barone and Philip Williams.</p>
+        </section>
+        <section data-background-image="img/ZsMwlm2-yellowish.jpg">
+          <h3>SMT versus NMT at Scale</h3>
+          <div style='font-size: 85%;'>
+            <table>
+              <tr>
+                <th>Apache Joshua</th>
+                <th>Sockeye</th>
+              </tr>
+              <tr>
+                <td>Reasonable Quality Translation</td>
+                <td>High Quality Translations</td>
+              </tr>
+              <tr>
+                <td>Java / C++</td>
+                <td>Python 3 / C++</td>
+              </tr>
+              <tr>
+                <td>Model size 60GB-120GB</td>
+                <td>Model size 256 MB</td>
+              </tr>
+              <tr>
+                <td>Complicated Training Process</td>
+                <td>Simple Training Process</td>
+              </tr>
+              <tr>
+                <td>Relatively complex implementation</td>
+                <td>400 lines of code</td>
+              </tr>
+              <tr>
+                <td>Low translation costs</td>
+                <td>High translation costs</td>
+              </tr>
+              <tr>
+            </table>
+          </div>
+        </section>
+        <section data-background-image="img/ZsMwlm2-yellowish.jpg">
+          <h3>SMT versus NMT at Scale</h3>
+          <div style='font-size: 85%;'>
+            <table>
+              <tr>
+                <th>Apache Joshua</th>
+                <th>Sockeye</th>
+              </tr>
+              <tr>
+                <td>Reasonable Quality Translation</td>
+                <td><span style="color: lightgreen">High Quality Translations<span></td>
+              </tr>
+              <tr>
+                <td>Java / C++</td>
+                <td>Python 3 / C++</td>
+              </tr>
+              <tr>
+                <td>Model size 60GB-120GB</td>
+                <td><span style="color: lightgreen">Model size 256 MB</span></td>
+              </tr>
+              <tr>
+                <td>Complicated Training Process</td>
+                <td><span style="color: lightgreen">Simple Training Process</span></td>
+              </tr>
+              <tr>
+                <td>Relatively complex implementation</td>
+                <td><span style="color: lightgreen">400 lines of code</span></td>
+              </tr>
+              <tr>
+                <td><span style="color: lightgreen">Low translation costs</span></td>
+                <td>High translation costs</td>
+              </tr>
+              <tr>
+            </table>
+          </div>
+        </section>
+        <section data-background-image="img/ZsMwlm2-redish.jpg">
+          <h3>NMT Samples</h3>
+        </section>
+        <section data-background-image="img/ZsMwlm2-redish.jpg">
+          <p>Jetzt LIVE: Abgeordnete debattieren über Zuspitzung des Syrien-Konflikts.</p>
+          <p>last but not least, Members are debating the escalation of the Syrian conflict.</p>
+        </section>
+        <section data-background-image="img/ZsMwlm2-redish.jpg">
+          <p>Sie haben wenig Zeit, wollen aber Fett verbrennen und Muskeln aufbauen?</p>
+          <p>You have little time, but want to burn fat and build muscles?</p>
+        </section>
+        <section data-background-image="img/ZsMwlm2-redish.jpg">
+          <h3>NMT Challenges – Twitter Content</h3>
+          <img src='img/twitter_is_hard.png' style='max-width: 75%; max-height: 50%; border: none; background: none;box-shadow: none; '/>
+        </section>
+        <section data-background-image="img/ZsMwlm2-redish.jpg">
+          <h3>NMT Challenges – Input</h3>
+          <ul>
+            <li>The input into all neural network models is always a vector.</li>
+            <li>Training data is always parallel text.</li>
+            <li>How do you represent a word from the text as a vector?</li>
+          </ul>
+        </section>
+        <section data-background-image="img/ZsMwlm2-redish.jpg">
+          <h3>Embedding Layer</h3>
+          <img src='img/vocab_first.png' style='max-width: 100%; border: none; background: none;box-shadow: none; '/>
+        </section>
+        <section data-background-image="img/ZsMwlm2-redish.jpg">
+          <img src='img/vocab_learned.png' style='max-width: 100%; border: none; background: none;box-shadow: none; '/>
+        </section>
+        <section data-background-image="img/ZsMwlm2-redish.jpg">
+          <h3>NMT Challenges – Rare Words</h3>
+          <p>Ok we can now represent 30,000 words as vectors, what about the rest?</p>
+        </section>
+        <section data-background-image="img/ZsMwlm2-redish.jpg">
+          <h3>NMT Challenges – Byte Pair Encoding</h3>
+          <img src='img/bpe.png' style='max-width: 75%; border: none; background: none;box-shadow: none; '/>
+          <p style='font-size: 35%;'>Rico Sennrich, Barry Haddow and Alexandra Birch (2016): Neural Machine Translation of Rare Words with Subword Units Proceedings of the 54th Annual Meeting of the Association for Computational Linguistics (ACL 2016). Berlin, Germany.</p>
+        </section>
+        <section data-background-image="img/ZsMwlm2-redish.jpg">
+          <h4>Byte Pair Encoding</h4>
+          "positional addition contextual"
+        </section>
+        <section data-background-image="img/ZsMwlm2-redish.jpg">
+          <h4>Byte Pair Encoding</h4>
+          "posi<span style="color: red">X</span>onal addi<span style="color: red">X</span>on contextual"</br>
+          ti = <span style="color: red">X</span>
+        </section>
+        <section data-background-image="img/ZsMwlm2-redish.jpg">
+          <h4>Byte Pair Encoding</h4>
+          "posi<span style="color: red">X</span>on<span style="color: blue">Y</span> addi<span style="color: red">X</span>on contextu<span style="color: blue">Y</span>"</br>
+          ti = <span style="color: red">X</span></br>
+          al = <span style="color: blue">Y</span>
+        </section>
+        <section data-background-image="img/ZsMwlm2-redish.jpg">
+          <h4>Byte Pair Encoding</h4>
+          "posi<span style="color: yellow">Z</span>n<span style="color: blue">Y</span> addi<span style="color: yellow">Z</span>n contextu<span style="color: blue">Y</span>"</br>
+          ti = <span style="color: red">X</span></br>
+          al = <span style="color: blue">Y</span></br>
+          <span style="color: red">X</span>o = <span style="color: yellow">Z</span>
+        </section>
+        <section data-background-image="img/ZsMwlm2-redish.jpg">
+          <h4>Byte Pair Encoding</h4>
+          these<br/>
+          ing<br/>
+          other<br/>
+          s,<br/>
+          must<br/>
+          Member
+        </section>
+        <section data-background-image="img/ZsMwlm2-redish.jpg">
+          <h3>NMT Challenges – Jagged Tensors</h3>
+          <p>Input is not sorted by length.</p>
+        </section>
+        <section data-background-image="img/ZsMwlm2-redish.jpg">
+          <h3>Jagged Tensors cont.</h3>
+          <img src='img/jagged.png' style='max-width: 80%; border: none; background: none;box-shadow: none; '/>
+        </section>
+        <section data-background-image="img/ZsMwlm2-redish.jpg">
+          <h3>Jagged Tensors cont.</h3>
+          <img src='img/sorted.png' style='max-width: 80%; border: none; background: none;box-shadow: none; '/>
+        </section>
+        <section data-background-image="img/ZsMwlm2-redish.jpg">
+          <h3>Jagged Tensors cont.</h3>
+          <img src='img/batch.png' style='max-width: 80%; border: none; background: none;box-shadow: none; '/>
+        </section>
+        <section data-background-image="img/ZsMwlm2-redish.jpg">
+          <h3>NMT Challenges – Cost</h3>
+          <ul>
+            <li>Step 1: Create great profiling tools, measurement.</li>
+            <li>Step 2: Get specialists to optimize bottlenecks. </li>
+            <li>Step 3: ???</li>
+            <li>Step 4: Profit.</li>
+          </ul><br/><br/>
+          
+          <span style='font-size: 50%;'>New layer norm, top-k, batch-mul, transpose, smoothing op.  3.5x speedup so far.  Working in branches:</span><br/>
+          <span style='font-size: 50%;'>https://github.com/MXNetEdge/sockeye/tree/dev_speed</span><br/>
+          <span style='font-size: 50%;'>https://github.com/MXNetEdge/incubator-mxnet/tree/dev_speed</span><br/>
+        </section>
+        <section data-background-image="img/ZsMwlm2-redish.jpg">
+          <h3>Apache MXNet Profiling Tools</h3>
+          <table>
+            <tr>
+              <th>CPU Profiler (vtune)</th>
+              <th>GPU Profiler (nvprof)</th>
+            </tr>
+          </table>
+          <table>
+            <td><img src='img/vtune_2.png' style='width: 400px; border: none; background: none;box-shadow: none; '/></td>
+            <td><img src='img/lstm.png' style='width: 400px; border: none; background: none;box-shadow: none; '/></td>
+          </table>
+        </section>
+        <section data-background-image="img/ZsMwlm2-redish.jpg">
+          <h3>TVM</h3>
+            <p style='font-size: 75%;'>TVM is a Tensor intermediate representation(IR) stack for deep learning systems. It is designed to close the gap between the productivity-focused deep learning frameworks, and the performance- and efficiency-focused hardware backends. TVM works with deep learning frameworks to provide end to end compilation to different backends. </p>
+            <p style='font-size: 50%;'>https://github.com/dmlc/tvm</p>
+        </section>
+        <section data-background-image="img/ZsMwlm2-redish.jpg">
+          <h3>Alibaba TVM Optimization</h3>
+            <img src='img/transformer.png' style='width: 300px; border: none; background: none;box-shadow: none; '/>
+            <p style='font-size: 50%;'>http://tvmlang.org/2018/03/23/nmt-transformer-optimize.html</p>
+        </section>
+        <section data-background-image="img/ZsMwlm2-redish.jpg">
+          <h3>Alibaba TVM Optimization</h3>
+            <img src='img/tvm_speedup.png' style='width: 400px; border: none; background: none;box-shadow: none; '/>
+        </section>
+        <section data-background-image="img/ZsMwlm2-redish.jpg">
+          <h3>Facebook - Tensor Comprehensions</h3><br/>
+          <img src='img/tc_evol_slower.gif' style='width: 400px; border: none; background: none;box-shadow: none; '/><br/>
+          <p style='font-size: 50%;'>https://research.fb.com/announcing-tensor-comprehensions/</p>
+        </section>
+        <section data-background-image="img/ZsMwlm2-purpleish.jpg">
+            <h3>Streaming Pipelines for NMT</h3>
+        </section>
+
+        <section data-background-image="img/ZsMwlm2-greenish.jpg">
+            <h3>NMT Inference Preprocessing</h3>
+            <img src='img/NMT_tasks.png' style='max-width: 80%; border: none; background: none;box-shadow: none; '/>
+        </section>
+        <section data-background-image="img/ZsMwlm2-redish.jpg">
+            <h3>Language Detection (Flink + OpenNLP)</h3>
+            <img src='img/LanguageDetect.png' style='max-width: 80%; border: none; background: none;box-shadow: none; '/>
+        </section>
+        <section data-background-image="img/ZsMwlm2-bluish.jpg">
+            <h3>Sentence Detection (Flink + OpenNLP)</h3>
+            <img src='img/SentenceDetect.png' style='max-width: 80%; border: none; background: none;box-shadow: none; '/>
+        </section>
+        <section data-background-image="img/ZsMwlm2-purpleish.jpg">
+            <h3>Tokenization (Flink + OpenNLP)</h3>
+            <img src='img/Tokenizer.png' style='max-width: 80%; border: none; background: none;box-shadow: none; '/>
+        </section>
+        <section data-background-image="img/ZsMwlm2-greenish.jpg">
+            <h3>SockeyeTranslate (Flink + Thrift)</h3>
+            <img src='img/SockeyeThriftClient.png' style='max-width: 80%; border: none; background: none;box-shadow: none; '/>
+        </section>
+        <section data-background-image="img/ZsMwlm2-greenish.jpg">
+            <h3>Complete Pipeline (Flink)</h3>
+            <img src='img/Complete-pipeline.png' style='max-width: 80%; border: none; background: none;box-shadow: none; '/>
+        </section>
+        <section data-background-image="img/ZsMwlm2-greenish.jpg">
+            <h3>NMT Inference Pipeline</h3>
+            <img src='img/pipeline.png' style='max-width: 80%; border: none; background: none;box-shadow: none; '/>
+        </section>
+        <section data-background-image="img/ZsMwlm2-purpleish.jpg">
+            <h3>Credits</h3>
+        </section>
+        <section data-background-image="img/buzzwords_2017-blueish.png">
+          <h3>Apache OpenNLP Team</h3>
+          <br/>
+          <img src="img/OpenNLP-Team.png", width="80%"/>
+        </section>
+        <section data-background-image="img/buzzwords_2017-blueish.png">
+            <h3>Apache Flink Team</h3>
+            <br/>
+            <img src="img/Flink-Team.png", width="80%"/>
+        </section>
+        <section data-background-image="img/buzzwords_2017-blueish.png">
+          <h3>Credits cont.</h3>
+          <ul>
+            <li>Asmus Hetzel (Amazon), Marek Kolodziej (NVIDIA), Dick Carter (NVIDIA), Tianqi Chen (U of W), MKL-DNN Team (Intel)</li>
+            <li>Sockeye: Felix Hieber (Amazon), Tobias Domhan (Amazon), David Vilar (Amazon), Matt Post (Amazon)</li>
+            <li>Apache Joshua: Matt Post (Johns Hopkins), Tommaso Teofili (Adobe), NASA JPL</li>
+            <li>University of Edinburgh, Google, Facebook, NYU, Stanford</li>
+          </ul>
+        </section>
+        <section data-background-image="img/ZsMwlm2.jpg">
+          <h2>Links</h2>
+          <ul>
+            <li>Attention is All You Need, Annotated: http://nlp.seas.harvard.edu/2018/04/03/attention.html</li>
+            <li>Sockeye training tutorial: https://github.com/awslabs/sockeye/tree/master/tutorials/wmt</li>
+            <li>Intro Deep Learning Tutorial: http://gluon.mxnet.io</li> 
+            <li>Slides: https://smarthi.github.io/DSW-Berlin18-Streaming-NMT/</li>
+            <li>Code: https://github.com/smarthi/streamingnmt</li>
+          </ul>
+        </section>
+        <section data-background-image="img/ZsMwlm2.jpg">
+          <h2>Questions ???</h2>
+        </section>
+        <section data-background-image="img/ZsMwlm2-redish.jpg">
+          <h3>Sockeye Model Types</h3>
+          <ul>
+              <li>RNN Models</li>
+              <li>Convolutional Models</li>
+              <li>Transformer Models</li>
+          </ul>
+        </section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+        controls: false,
+        progress: true,
+        history: true,
+        center: true,
+        slideNumber: true,
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+        keyboard: true,
+        touch: true,
+        loop: false,
+        fragments: true,
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>

@@ -346,46 +346,6 @@ e~ = best translation, the one with highest probability</code></pre>
           </ul>
         </section>
         <section data-background-image="img/ZsMwlm2-redish.jpg">
-          <h3>NMT Challenges – Rare Words</h3>
-          <p>Ok we can now represent 30,000 words as vectors, what about the rest?</p>
-        </section>
-        <section data-background-image="img/ZsMwlm2-redish.jpg">
-          <h3>NMT Challenges – Byte Pair Encoding</h3>
-          <img src='img/bpe.png' style='max-width: 75%; border: none; background: none;box-shadow: none; '/>
-          <p style='font-size: 35%;'>Rico Sennrich, Barry Haddow and Alexandra Birch (2016): Neural Machine Translation of Rare Words with Subword Units Proceedings of the 54th Annual Meeting of the Association for Computational Linguistics (ACL 2016). Berlin, Germany.</p>
-        </section>
-        <section data-background-image="img/ZsMwlm2-redish.jpg">
-          <h4>Byte Pair Encoding</h4>
-          "positional addition contextual"
-        </section>
-        <section data-background-image="img/ZsMwlm2-redish.jpg">
-          <h4>Byte Pair Encoding</h4>
-          "posi<span style="color: red">X</span>onal addi<span style="color: red">X</span>on contextual"
-          ti = <span style="color: red">X</span>
-        </section>
-        <section data-background-image="img/ZsMwlm2-redish.jpg">
-          <h4>Byte Pair Encoding</h4>
-          "posi<span style="color: red">X</span>on<span style="color: blue">Y</span> addi<span style="color: red">X</span>on contextu<span style="color: blue">Y</span>"</br>
-          ti = <span style="color: red">X</span>
-          al = <span style="color: blue">Y</span>
-        </section>
-        <section data-background-image="img/ZsMwlm2-redish.jpg">
-          <h4>Byte Pair Encoding</h4>
-          "posi<span style="color: yellow">Z</span>n<span style="color: blue">Y</span> addi<span style="color: yellow">Z</span>n contextu<span style="color: blue">Y</span>"</br>
-          ti = <span style="color: red">X</span>
-          al = <span style="color: blue">Y</span>
-          <span style="color: red">X</span>o = <span style="color: yellow">Z</span>
-        </section>
-        <section data-background-image="img/ZsMwlm2-redish.jpg">
-          <h4>Byte Pair Encoding</h4>
-          these<br/>
-          ing<br/>
-          other<br/>
-          s,<br/>
-          must<br/>
-          Member
-        </section>
-        <section data-background-image="img/ZsMwlm2-redish.jpg">
           <h3>NMT Challenges – Jagged Tensors</h3>
           <p>Input is not sorted by length.</p>
         </section>
@@ -461,7 +421,7 @@ e~ = best translation, the one with highest probability</code></pre>
           <h3>Credits</h3>
           <ul>
             <li>Jose Contreras, Matthieu Guillaumin, Kellen Sunderland (Amazon)</li>
-            <li>Pascal Hahn (Amazon)</li>
+            <li>Pascal Hahn, Jed Sundvall (Amazon)</li>
             <li>Ali Abbas (HERE)</li>
             <li>Sergei Sokolenko (Google)</li>
             <li>Apache OpenNLP: Bruno Kinoshita, Joern Kottmann</li>

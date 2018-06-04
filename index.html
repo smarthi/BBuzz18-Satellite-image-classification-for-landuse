@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>Building streaming pipelines for neural machine translation</title>
+		<title>Large Scale Landuse Classification of Satellite Imagery</title>
 
     <meta name="description" content="Building streaming pipelines for neural machine translation">
     <meta name="author" content="Kellen Sunderland; Suneel Marthi">
@@ -38,22 +38,15 @@
           <br/>
           <br/>
           <br/>
-          <h3>Building Streaming pipelines for Neural Machine Translation</h3>
+          <h3>Large Scale Landuse Classification of Satellite Imagery</h3>
           <br/>
-          <p>Suneel Marthi<br/>
-             Kellen Sunderland
+          <p>Suneel Marthi
           </p>
-          <p style="font-size: 60%">April 19, 2018<br/>
-             DataWorks Summit, Berlin, Germany</p>
+          <p style="font-size: 60%">June 11, 2018<br/>
+             Berlin Buzzwords, Berlin, Germany</p>
         </section>
 				<section data-background-image="img/ZsMwlm2.jpg">
-          <h3>$WhoAreWe</h3>
-          <h6 style='text-align: left; font-size: 80%;'>Kellen Sunderland <br/><span style="font-size: 60%"><i class="fa fa-twitter" aria-hidden="true"></i> @KellenDB</span></h6>
-          <ul style='font-size: 70%;'>
-            <li>Member of Apache Software Foundation</li>
-            <li>Contributor to Apache MXNet (incubating), and committer on Apache Joshua (incubating)</li>
-          </ul>
-          <br/>
+          <h3>$WhoAmI</h3>
           <h6 style='text-align: left; font-size: 80%;'>Suneel Marthi <br/><span style="font-size: 60%"><i class="fa fa-twitter" aria-hidden="true"></i> @suneelmarthi</span></h6>
           <ul style='font-size: 70%;'>
             <li>Member of Apache Software Foundation</li>
@@ -345,23 +338,12 @@ e~ = best translation, the one with highest probability</code></pre>
           <p>You have little time, but want to burn fat and build muscles?</p>
         </section>
         <section data-background-image="img/ZsMwlm2-redish.jpg">
-          <h3>NMT Challenges – Twitter Content</h3>
-          <img src='img/twitter_is_hard.png' style='max-width: 75%; max-height: 50%; border: none; background: none;box-shadow: none; '/>
-        </section>
-        <section data-background-image="img/ZsMwlm2-redish.jpg">
           <h3>NMT Challenges – Input</h3>
           <ul>
             <li>The input into all neural network models is always a vector.</li>
             <li>Training data is always parallel text.</li>
             <li>How do you represent a word from the text as a vector?</li>
           </ul>
-        </section>
-        <section data-background-image="img/ZsMwlm2-redish.jpg">
-          <h3>Embedding Layer</h3>
-          <img src='img/vocab_first.png' style='max-width: 100%; border: none; background: none;box-shadow: none; '/>
-        </section>
-        <section data-background-image="img/ZsMwlm2-redish.jpg">
-          <img src='img/vocab_learned.png' style='max-width: 100%; border: none; background: none;box-shadow: none; '/>
         </section>
         <section data-background-image="img/ZsMwlm2-redish.jpg">
           <h3>NMT Challenges – Rare Words</h3>
@@ -378,20 +360,20 @@ e~ = best translation, the one with highest probability</code></pre>
         </section>
         <section data-background-image="img/ZsMwlm2-redish.jpg">
           <h4>Byte Pair Encoding</h4>
-          "posi<span style="color: red">X</span>onal addi<span style="color: red">X</span>on contextual"</br>
+          "posi<span style="color: red">X</span>onal addi<span style="color: red">X</span>on contextual"
           ti = <span style="color: red">X</span>
         </section>
         <section data-background-image="img/ZsMwlm2-redish.jpg">
           <h4>Byte Pair Encoding</h4>
           "posi<span style="color: red">X</span>on<span style="color: blue">Y</span> addi<span style="color: red">X</span>on contextu<span style="color: blue">Y</span>"</br>
-          ti = <span style="color: red">X</span></br>
+          ti = <span style="color: red">X</span>
           al = <span style="color: blue">Y</span>
         </section>
         <section data-background-image="img/ZsMwlm2-redish.jpg">
           <h4>Byte Pair Encoding</h4>
           "posi<span style="color: yellow">Z</span>n<span style="color: blue">Y</span> addi<span style="color: yellow">Z</span>n contextu<span style="color: blue">Y</span>"</br>
-          ti = <span style="color: red">X</span></br>
-          al = <span style="color: blue">Y</span></br>
+          ti = <span style="color: red">X</span>
+          al = <span style="color: blue">Y</span>
           <span style="color: red">X</span>o = <span style="color: yellow">Z</span>
         </section>
         <section data-background-image="img/ZsMwlm2-redish.jpg">
@@ -465,28 +447,7 @@ e~ = best translation, the one with highest probability</code></pre>
           <p style='font-size: 50%;'>https://research.fb.com/announcing-tensor-comprehensions/</p>
         </section>
         <section data-background-image="img/ZsMwlm2-purpleish.jpg">
-            <h3>Streaming Pipelines for NMT</h3>
-        </section>
-
-        <section data-background-image="img/ZsMwlm2-greenish.jpg">
-            <h3>NMT Inference Preprocessing</h3>
-            <img src='img/NMT_tasks.png' style='max-width: 80%; border: none; background: none;box-shadow: none; '/>
-        </section>
-        <section data-background-image="img/ZsMwlm2-redish.jpg">
-            <h3>Language Detection (Flink + OpenNLP)</h3>
-            <img src='img/LanguageDetect.png' style='max-width: 80%; border: none; background: none;box-shadow: none; '/>
-        </section>
-        <section data-background-image="img/ZsMwlm2-bluish.jpg">
-            <h3>Sentence Detection (Flink + OpenNLP)</h3>
-            <img src='img/SentenceDetect.png' style='max-width: 80%; border: none; background: none;box-shadow: none; '/>
-        </section>
-        <section data-background-image="img/ZsMwlm2-purpleish.jpg">
-            <h3>Tokenization (Flink + OpenNLP)</h3>
-            <img src='img/Tokenizer.png' style='max-width: 80%; border: none; background: none;box-shadow: none; '/>
-        </section>
-        <section data-background-image="img/ZsMwlm2-greenish.jpg">
-            <h3>SockeyeTranslate (Flink + Thrift)</h3>
-            <img src='img/SockeyeThriftClient.png' style='max-width: 80%; border: none; background: none;box-shadow: none; '/>
+            <h3>Streaming Pipelines for Satellite Image Classification</h3>
         </section>
         <section data-background-image="img/ZsMwlm2-greenish.jpg">
             <h3>Complete Pipeline (Flink)</h3>
@@ -496,26 +457,12 @@ e~ = best translation, the one with highest probability</code></pre>
             <h3>NMT Inference Pipeline</h3>
             <img src='img/pipeline.png' style='max-width: 80%; border: none; background: none;box-shadow: none; '/>
         </section>
-        <section data-background-image="img/ZsMwlm2-purpleish.jpg">
-            <h3>Credits</h3>
-        </section>
         <section data-background-image="img/buzzwords_2017-blueish.png">
-          <h3>Apache OpenNLP Team</h3>
-          <br/>
-          <img src="img/OpenNLP-Team.png", width="80%"/>
-        </section>
-        <section data-background-image="img/buzzwords_2017-blueish.png">
-            <h3>Apache Flink Team</h3>
-            <br/>
-            <img src="img/Flink-Team.png", width="80%"/>
-        </section>
-        <section data-background-image="img/buzzwords_2017-blueish.png">
-          <h3>Credits cont.</h3>
+          <h3>Credits</h3>
           <ul>
-            <li>Asmus Hetzel (Amazon), Marek Kolodziej (NVIDIA), Dick Carter (NVIDIA), Tianqi Chen (U of W), MKL-DNN Team (Intel)</li>
-            <li>Sockeye: Felix Hieber (Amazon), Tobias Domhan (Amazon), David Vilar (Amazon), Matt Post (Amazon)</li>
-            <li>Apache Joshua: Matt Post (Johns Hopkins), Tommaso Teofili (Adobe), NASA JPL</li>
-            <li>University of Edinburgh, Google, Facebook, NYU, Stanford</li>
+            <li>Jose Contreras, Matthieu Guillaumin, Kellen Sunderland (Amazon)</li>
+            <li>Sergei Sokolenko (Google)</li>
+            <li>Apache OpenNLP: Bruno Kinoshita, Joern Kottmann</li>
           </ul>
         </section>
         <section data-background-image="img/ZsMwlm2.jpg">

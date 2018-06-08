@@ -102,25 +102,45 @@ e~ = best translation, the one with highest probability</code></pre>
             </dl>
         </section>
         <section data-background-image="img/ZsMwlm2-greenish.jpg">
-            <p>Look at a parallel corpus<br/>(German text along with English translation)</p>
+            <p>Cloud Filtering: Training data(2)</p>
             <table>
                 <thead>
                 <tr>
-                    <th>Translation of Ge­b&auml;u­de</th><th>Count</th><th>Probability</th>
+                    <th>Origin</th><th>No. of Images</th><th>Cloudy Images</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td>house</td><td>5.28 billion</td><td>0.51</td>
+                    <td>Kaggle Competition</td><td>40000</td><td>30%</td>
                 </tr>
                 <tr>
-                    <td>building</td><td>4.16 billion</td><td>0.402</td>
+                    <td>Sentinel-2(hand labelled)</td><td>5000</td><td>50%</td>
                 </tr>
                 <tr>
-                    <td>tower</td><td>9.28 million</td><td>0.09</td>
+                    <td>Total</td><td>45000</td><td>32%</td>
                 </tr>
                 </tbody>
             </table>
+            <p>Only two classes: clear and cloudy (cloudy = haze + partly cloudy + cloudy) </p>
+        </section>
+        <section data-background-image="img/ZsMwlm2-greenish.jpg">
+            <p>Results</p>
+            <table>
+                <thead>
+                <tr>
+                    <th>Model</th><th>Accuracy</th><th>F1</th><th>Epochs (train + finetune)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>ResNet50</td><td>0.983</td><td>0.986</td><td>23 + 7</td>
+                </tr>
+                <tr>
+                    <td>ResNet101</td><td>0.978</td><td>0.982</td><td>43 + 9</td>
+                </tr>
+                </tbody>
+            </table>
+            <p>Choose ResNet50 for filtering cloudy images</p>
         </section>
         <section data-background-image="img/ZsMwlm2-yellowish.jpg">
             <h3>Alignment</h3>

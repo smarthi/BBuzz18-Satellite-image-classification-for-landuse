@@ -75,53 +75,48 @@
                 <img src='img/slide3.png' style='margin: 0px, 20px, 0px, 20px; border: none; background: none;box-shadow: none; '/><br/>
             </div>
         </section>
-                <section data-background-image="img/ZsMwlm2-purpleish.jpg">
-                    <h3>Data: Sentinel-2</h3>
-                    <ul>
+        <section data-background-image="img/ZsMwlm2-purpleish.jpg">
+            <h3>Data: Sentinel-2</h3>
+            <p style='text-align: left'>Earth observation mission from ESA</p>
+            <p style='text-align: left'>13 spectral bands, from RGB to SWIR (Short Wave Infrared)</p>
+            <p style='text-align: left'>Spatial resolution: 10m/px (RGB bands)</p>
+            <p style='text-align: left'>5 day revisit time</p>
+            <p style='text-align: left'>Free and open data policy</p>
+            <img src='img/slide5.png' style=' position: absolute; right: 0px; bottom: 0px; width: 30%; height: 30%; margin: 0px, 0px, 0px, 0px; border: none; background: none;box-shadow: none; '/><br/>
+        </section>
 
-                    </ul>
-                    <p style='text-align: left'>Earth observation mission from ESA</p>
-                    <p style='text-align: left'>13 spectral bands, from RGB to SWIR (Short Wave Infrared)</p>
-                    <p style='text-align: left'>Spatial resolution: 10m/px (RGB bands)</p>
-                    <p style='text-align: left'>5 day revisit time</p>
-                    <p style='text-align: left'>Free and open data policy</p>
-                    <img src='img/slide5.png' style=' position: absolute; right: 0px; bottom: 0px; width: 30%; height: 30%; margin: 0px, 0px, 0px, 0px; border: none; background: none;box-shadow: none; '/><br/>
-                </section>
-
-
-                <section data-background-image="img/ZsMwlm2-greenish.jpg">
-                    <h3>Data acquisition</h3>
-                    <p style='text-align: left'>Images downloaded using Sentinel Hub’s WMS (web mapping service)</p>
-                    <p style='text-align: left'>Download tool from Matthieu Guillaumin (@mguillau)</p>
-                    <table>
-                        <td><img src='img/slide6.png' style='margin: 0px, 0px, 0px, 0px; border: none; background: none;box-shadow: none; '/><br/></td>
-                        <td><img src='img/slide6-2.png' style='margin: 0px, 0px, 0px, 0px; border: none; background: none;box-shadow: none; '/><br/></td>
-                    </table>
-                </section>
-                <section data-background-image="img/ZsMwlm2-greenish.jpg">
-                    <h3>Data</h3>
-                    <p style='text-align: left'>256 x 256 px images, RGB</p>
-                    <img src='img/slide7.png' style='margin: 0px, 0px, 0px, 0px; border: none; background: none;box-shadow: none; '/><br/>
-                </section>
-                <section data-background-image="img/ZsMwlm2-purpleish.jpg">
-                    <h4>Workflow</h4>
-                    <div style="background: #c9c9c9;">
-                        <img src='img/slide3.png' style='margin: 0px, 20px, 0px, 20px; border: none; background: none;box-shadow: none; '/><br/>
-                    </div>
-                </section>
-                <section data-background-image="img/ZsMwlm2-purpleish.jpg">
-                    <h4>Cloud filtering</h4>
-                    <p style='text-align: left'>Need to remove cloudy images before segmenting</p>
-                    <p style='text-align: left'>Approach: train a Neural Network to classify images as clear or cloudy</p>
-                    <p style='text-align: left'>Tested CNNs: ResNet50 and ResNet101</p>
-                </section>
-                <section data-background-image="img/ZsMwlm2-purpleish.jpg">
-                    <h4>Cloud filtering: training data</h4>
-                    <p style='text-align: left'>‘Planet: Understanding the Amazon from Space’ Kaggle competition</p>
-                    <p style='text-align: left'>40K images labeled as clear, hazy, partly cloudy or cloudy</p>
-                    <img src='img/slide10.png' style='margin: 0px, 0px, 0px, 0px; border: none; background: none;box-shadow: none; '/><br/>
-
-                </section>
+        <section data-background-image="img/ZsMwlm2-greenish.jpg">
+            <h3>Data acquisition</h3>
+            <p style='text-align: left'>Images downloaded using Sentinel Hub’s WMS (web mapping service)</p>
+            <p style='text-align: left'>Download tool from Matthieu Guillaumin (@mguillau)</p>
+            <table>
+                <td><img src='img/slide6.png' style='margin: 0px, 0px, 0px, 0px; border: none; background: none;box-shadow: none; '/><br/></td>
+                <td><img src='img/slide6-2.png' style='margin: 0px, 0px, 0px, 0px; border: none; background: none;box-shadow: none; '/><br/></td>
+            </table>
+        </section>
+        <section data-background-image="img/ZsMwlm2-greenish.jpg">
+            <h3>Data</h3>
+            <p style='text-align: left'>256 x 256 px images, RGB</p>
+            <img src='img/slide7.png' style='margin: 0px, 0px, 0px, 0px; border: none; background: none;box-shadow: none; '/><br/>
+        </section>
+        <section data-background-image="img/ZsMwlm2-purpleish.jpg">
+            <h4>Workflow</h4>
+            <div style="background: #c9c9c9;">
+                <img src='img/slide3.png' style='margin: 0px, 20px, 0px, 20px; border: none; background: none;box-shadow: none; '/><br/>
+            </div>
+        </section>
+        <section data-background-image="img/ZsMwlm2-purpleish.jpg">
+            <h4>Cloud filtering</h4>
+            <p style='text-align: left'>Need to remove cloudy images before segmenting</p>
+            <p style='text-align: left'>Approach: train a Neural Network to classify images as clear or cloudy</p>
+            <p style='text-align: left'>Tested CNNs: ResNet50 and ResNet101</p>
+        </section>
+        <section data-background-image="img/ZsMwlm2-purpleish.jpg">
+            <h4>Cloud filtering: training data</h4>
+            <p style='text-align: left'>‘Planet: Understanding the Amazon from Space’ Kaggle competition</p>
+            <p style='text-align: left'>40K images labeled as clear, hazy, partly cloudy or cloudy</p>
+            <img src='img/slide10.png' style='margin: 0px, 0px, 0px, 0px; border: none; background: none;box-shadow: none; '/><br/>
+        </section>
         <section data-background-image="img/ZsMwlm2-greenish.jpg">
             <p>Cloud Filtering: Training data(2)</p>
             <table>
@@ -363,197 +358,33 @@ p.rotate(probability=0.75, max_rotation=20)
             </ul>
         </section>
         <section data-background-image="img/ZsMwlm2-redish.jpg">
-            <h3>Alignment Function</h3>
-            <ul>
-                <li>Word-Based Models translate words as atomic units</li>
-                <li>Phrase-Based Models translate phrases as atomic units</li>
-                <li>Advantages:</li>
-                <ul>
-                    <li>many-to-many translation can handle non-compositional phrases</li>
-                    <li>use of local context in translation</li>
-                    <li>the more data, the longer phrases can be learned</li>
-                </ul>
-                <li>&ldquo;Standard Model&rdquo;, used by Google Translate until 2016 (switched to Neural MT)</li>
-            </ul>
+            <h4>Example Data Augmentation</h4>
+            <div style="background: #c9c9c9;">
+                <img src='img/DataAugmentation.png' style='margin: 0px, 20px, 0px, 20px; border: none; background: none;box-shadow: none; '/><br/>
+            </div>
         </section>
         <section data-background-image="img/ZsMwlm2-purpleish.jpg">
-            <h3>Decoding</h3>
+            <h4>Loss function: Soft Dice Coefficient loss</h4>
+            <img src='img/slide22.png' style='margin: 0px, 20px, 0px, 20px; border: none; background: none;box-shadow: none; '/><br/>
+            <p style='...'>Prediction = Probability of each pixel belonging to a Tulip Field (Softmax output)</p>
+            <p style='...'>ε serves to prevent division by zero</p>
         </section>
-        <section data-background-image="img/ZsMwlm2-purpleish.jpg">
-            <ul>
-                <li>We have a mathematical model for translation <code>p(e|f)</code></li>
-                <li>Task of decoding: find the translation <code>e<sub style="font-size:50%">best</small></sub></code> with highest probability<br/>
-                    <pre><code data-trim data-noescape>e<sub style="font-size:50%">best</sub> = <i>argmax</i> p(e|f)</code></pre>
-                </li>
-                <li>Two types of error</li>
-                <ul>
-                    <li>the most probable translation is bad &rarr; fix the model</li>
-                    <li>search does not find the most probable translation &rarr; fix the search</li>
-                </ul>
-            </ul>
-        </section>
-        <section data-background-image="img/ZsMwlm2-purpleish.jpg">
-            <h3>Neural Machine Translation</h3>
-        </section>
-        <section data-background-image="img/ZsMwlm2-purpleish.jpg">
-          <p style='text-align: left'>Generate Translations from Neural Network models trained on Bilingual Corpora.</p>
-          <p style='text-align: left'>Translation happens per a probability distribution one word at time (no phrases).</p>
-          <div style="background: #c9c9c9;">
-            <img src='img/softmax.png' style='margin: 0px, 20px, 0px, 20px; border: none; background: none;box-shadow: none; '/><br/>
-            <img src='img/cross_entropy.png' style='margin: 0px, 20px, 0px, 20px; border: none; background: none;box-shadow: none; '/>
-          </div>
-       </section>
-        <section data-background-image="img/ZsMwlm2-purpleish.jpg">
-          <p style='text-align: left'>NMT is deep learning applied to machine translation.</p>
-          <img src='img/transformer.png' style='max-width: 25%; margin: 0px, 20px, 0px, 20px; border: none; background: none;box-shadow: none; '/>
-          <p style='font-size: 35%;'>"Attention Is All You Need" - Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, Illia Polosukhin <br/> Google Brain https://arxiv.org/abs/1706.03762</p>
-        </section>
-        <section data-background-image="img/ZsMwlm2-redish.jpg">
-          <h3>Why move from SMT to NMT?</h3>
-          <ul>
-            <li>Research results were too good to ignore.</li>
-            <li>The fluency of translations was a huge step forward compared to statistical systems.</li>
-            <li>We knew that there would be exciting future work to be done in this area.</li>
-          </ul>
-        </section>
-        <section data-background-image="img/ZsMwlm2-redish.jpg">
-          <h3>Why move from SMT to NMT?</h3>
-          <img src='img/wmt.png' style='max-width: 50%; max-height: 50%; border: none; background: none;box-shadow: none; '/>
-          <p style='font-size: 50%;'>The University of Edinburgh’s Neural MT Systems for WMT17 – Rico Sennrich, Alexandra Birch, Anna Currey, Ulrich Germann, Barry Haddow, Kenneth Heafield, Antonio Valerio Miceli Barone and Philip Williams.</p>
+        <section data-background-image="img/ZsMwlm2-greenish.jpg">
+            <h4>Evaluation Metric: IoU</h4>
+            <img src='img/slide23.png' style='margin: 0px, 20px, 0px, 20px; border: none; background: none;box-shadow: none; '/><br/>
+            <p style='...'><i>Aka</i> Jaccard Index</p>
+            <p style='...'>Similar to Dice coefficient, standard metric for image segmentation </p>
         </section>
         <section data-background-image="img/ZsMwlm2-yellowish.jpg">
-          <h3>SMT versus NMT at Scale</h3>
-          <div style='font-size: 85%;'>
-            <table>
-              <tr>
-                <th>Apache Joshua</th>
-                <th>Sockeye</th>
-              </tr>
-              <tr>
-                <td>Reasonable Quality Translation</td>
-                <td>High Quality Translations</td>
-              </tr>
-              <tr>
-                <td>Java / C++</td>
-                <td>Python 3 / C++</td>
-              </tr>
-              <tr>
-                <td>Model size 60GB-120GB</td>
-                <td>Model size 256 MB</td>
-              </tr>
-              <tr>
-                <td>Complicated Training Process</td>
-                <td>Simple Training Process</td>
-              </tr>
-              <tr>
-                <td>Relatively complex implementation</td>
-                <td>400 lines of code</td>
-              </tr>
-              <tr>
-                <td>Low translation costs</td>
-                <td>High translation costs</td>
-              </tr>
-              <tr>
-            </table>
-          </div>
+            <h3>Results</h3>
+            <ul>
+                <li><b>IoU = 0.73</b> after 23 training epochs</li>
+                <li>Related results: DSTL Kaggle competition</li>
+                <li>IoU = 0.84 on crop vs building/road/water/etc segmentation</li>
+            </ul>
+            <p style="font-size: 35%;"><i>https://www.kaggle.com/c/dstl-satellite-imagery-feature-detection/discussion/29790</i></p>
         </section>
-        <section data-background-image="img/ZsMwlm2-yellowish.jpg">
-          <h3>SMT versus NMT at Scale</h3>
-          <div style='font-size: 85%;'>
-            <table>
-              <tr>
-                <th>Apache Joshua</th>
-                <th>Sockeye</th>
-              </tr>
-              <tr>
-                <td>Reasonable Quality Translation</td>
-                <td><span style="color: lightgreen">High Quality Translations<span></td>
-              </tr>
-              <tr>
-                <td>Java / C++</td>
-                <td>Python 3 / C++</td>
-              </tr>
-              <tr>
-                <td>Model size 60GB-120GB</td>
-                <td><span style="color: lightgreen">Model size 256 MB</span></td>
-              </tr>
-              <tr>
-                <td>Complicated Training Process</td>
-                <td><span style="color: lightgreen">Simple Training Process</span></td>
-              </tr>
-              <tr>
-                <td>Relatively complex implementation</td>
-                <td><span style="color: lightgreen">400 lines of code</span></td>
-              </tr>
-              <tr>
-                <td><span style="color: lightgreen">Low translation costs</span></td>
-                <td>High translation costs</td>
-              </tr>
-              <tr>
-            </table>
-          </div>
-        </section>
-        <section data-background-image="img/ZsMwlm2-redish.jpg">
-          <h3>NMT Samples</h3>
-        </section>
-        <section data-background-image="img/ZsMwlm2-redish.jpg">
-          <p>Jetzt LIVE: Abgeordnete debattieren über Zuspitzung des Syrien-Konflikts.</p>
-          <p>last but not least, Members are debating the escalation of the Syrian conflict.</p>
-        </section>
-        <section data-background-image="img/ZsMwlm2-redish.jpg">
-          <p>Sie haben wenig Zeit, wollen aber Fett verbrennen und Muskeln aufbauen?</p>
-          <p>You have little time, but want to burn fat and build muscles?</p>
-        </section>
-        <section data-background-image="img/ZsMwlm2-redish.jpg">
-          <h3>NMT Challenges – Input</h3>
-          <ul>
-            <li>The input into all neural network models is always a vector.</li>
-            <li>Training data is always parallel text.</li>
-            <li>How do you represent a word from the text as a vector?</li>
-          </ul>
-        </section>
-        <section data-background-image="img/ZsMwlm2-redish.jpg">
-          <h3>NMT Challenges – Jagged Tensors</h3>
-          <p>Input is not sorted by length.</p>
-        </section>
-        <section data-background-image="img/ZsMwlm2-redish.jpg">
-          <h3>Jagged Tensors cont.</h3>
-          <img src='img/jagged.png' style='max-width: 80%; border: none; background: none;box-shadow: none; '/>
-        </section>
-        <section data-background-image="img/ZsMwlm2-redish.jpg">
-          <h3>Jagged Tensors cont.</h3>
-          <img src='img/sorted.png' style='max-width: 80%; border: none; background: none;box-shadow: none; '/>
-        </section>
-        <section data-background-image="img/ZsMwlm2-redish.jpg">
-          <h3>Jagged Tensors cont.</h3>
-          <img src='img/batch.png' style='max-width: 80%; border: none; background: none;box-shadow: none; '/>
-        </section>
-        <section data-background-image="img/ZsMwlm2-redish.jpg">
-          <h3>NMT Challenges – Cost</h3>
-          <ul>
-            <li>Step 1: Create great profiling tools, measurement.</li>
-            <li>Step 2: Get specialists to optimize bottlenecks. </li>
-            <li>Step 3: ???</li>
-            <li>Step 4: Profit.</li>
-          </ul><br/><br/>
-          
-          <span style='font-size: 50%;'>New layer norm, top-k, batch-mul, transpose, smoothing op.  3.5x speedup so far.  Working in branches:</span><br/>
-          <span style='font-size: 50%;'>https://github.com/MXNetEdge/sockeye/tree/dev_speed</span><br/>
-          <span style='font-size: 50%;'>https://github.com/MXNetEdge/incubator-mxnet/tree/dev_speed</span><br/>
-        </section>
-        <section data-background-image="img/ZsMwlm2-redish.jpg">
-          <h3>Apache MXNet Profiling Tools</h3>
-          <table>
-            <tr>
-              <th>CPU Profiler (vtune)</th>
-              <th>GPU Profiler (nvprof)</th>
-            </tr>
-          </table>
-          <table>
-            <td><img src='img/vtune_2.png' style='width: 400px; border: none; background: none;box-shadow: none; '/></td>
-            <td><img src='img/lstm.png' style='width: 400px; border: none; background: none;box-shadow: none; '/></td>
-          </table>
-        </section>
+
         <section data-background-image="img/ZsMwlm2-redish.jpg">
           <h3>TVM</h3>
             <p style='font-size: 75%;'>TVM is a Tensor intermediate representation(IR) stack for deep learning systems. It is designed to close the gap between the productivity-focused deep learning frameworks, and the performance- and efficiency-focused hardware backends. TVM works with deep learning frameworks to provide end to end compilation to different backends. </p>

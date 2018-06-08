@@ -56,12 +56,10 @@
         <section data-background-image="img/ZsMwlm2.jpg">
           <h3>Agenda</h3>
           <ul>
-            <li>What is Machine Translation ?</li>
-            <li>Why move to NMT from SMT ?</li>
-            <li>NMT Samples</li>
-            <li>NMT Challenges</li>
-            <li>Streaming Pipelines for NMT</li>
-            <li>Demo</li>
+            <li>Introduction</li>
+            <li>Data description</li>
+            <li>Cloud classification</li>
+            <li>Segmentation</li>
           </ul>
         </section>
         <section data-background-image="img/ZsMwlm2-purpleish.jpg">
@@ -70,12 +68,34 @@
                 <img src='img/tulip-fields.png' style='margin: 0px, 20px, 0px, 20px; border: none; background: none;box-shadow: none; '/><br/>
             </div>
         </section>
+
         <section data-background-image="img/ZsMwlm2-purpleish.jpg">
             <h4>Workflow</h4>
             <div style="background: #c9c9c9;">
                 <img src='img/slide3.png' style='margin: 0px, 20px, 0px, 20px; border: none; background: none;box-shadow: none; '/><br/>
             </div>
         </section>
+                <section data-background-image="img/ZsMwlm2-purpleish.jpg">
+                    <h3>Data: Sentinel-2</h3>
+                    <p style='text-align: left'>Earth observation mission from ESA</p>
+                    <p style='text-align: left'>13 spectral bands, from RGB to SWIR (Short Wave Infrared)</p>
+                    <p style='text-align: left'>Spatial resolution: 10m/px (RGB bands)</p>
+                    <p style='text-align: left'>5 day revisit time</p>
+                    <p style='text-align: left'>Free and open data policy</p>
+                    <img src='img/slide5.png' style='margin: 0px, 0px, 0px, 0px; border: none; background: none;box-shadow: none; '/><br/>
+                </section>
+                <section data-background-image="img/ZsMwlm2-greenish.jpg">
+                    <h3>Data acquisition</h3>
+                    <p style='text-align: left'>Images downloaded using Sentinel Hub’s WMS (web mapping service)</p>
+                    <p style='text-align: left'>Download tool from Matthieu Guillaumin (@mguillau)</p>
+                    <img src='img/slide6.png' style='margin: 0px, 0px, 0px, 0px; border: none; background: none;box-shadow: none; '/><br/>
+                    <img src='img/slide6-2.png' style='margin: 0px, 0px, 0px, 0px; border: none; background: none;box-shadow: none; '/><br/>
+                </section>
+                <section data-background-image="img/ZsMwlm2-greenish.jpg">
+                    <h3>Data</h3>
+                    <p style='text-align: left'>256 x 256 px images, RGB</p>
+                    <img src='img/slide7.png' style='margin: 0px, 0px, 0px, 0px; border: none; background: none;box-shadow: none; '/><br/>
+                </section>
         <section data-background-image="img/ZsMwlm2-greenish.jpg">
             <p>Cloud Filtering: Training data(2)</p>
             <table>
@@ -104,6 +124,7 @@
                 <img src='img/slide12.png' style='margin: 0px, 20px, 0px, 20px; border: none; background: none;box-shadow: none; '/><br/>
             </div>
         </section>
+
         <section data-background-image="img/ZsMwlm2-greenish.jpg">
             <p>Results</p>
             <table>

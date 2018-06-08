@@ -260,7 +260,6 @@
                                 <li>Ground truth: tulip fields in the Netherlands</li>
                                 <li>Provided by Geopedia, from Sinergise</li>
                                 <img src='img/slide21.png' style='margin: 0px, 20px, 0px, 20px; border: none; background: none;box-shadow: none; '/><br/>
-
                             </ul>
                         </td>
                         <td>
@@ -271,7 +270,32 @@
                 </tbody>
             </table>
         </section>
+                <section data-background-image="img/ZsMwlm2-yellowish.jpg">
+                    <h3>Data augmentation
+                    </h3>
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td>
+                              <img src='img/slide-aug.png' style='margin: 0px, 20px, 0px, 20px; border: none; background: none;box-shadow: none; '/><br/>
+                            </td>
+                            <td>
+                                <pre><code data-trim data-noescape>import Augmentor
 
+p = Augmentor.Pipeline(img_dir)
+
+p.skew(probability=0.5, magnitude=0.5)
+p.shear(probability=0.3, max_shear=15)
+p.flip_left_right(probability=0.5)
+p.flip_top_bottom(probability=0.5)
+p.rotate_random_90(probability=0.75)
+p.rotate(probability=0.75, max_rotation=20)
+ </code></pre>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </section>
         <section data-background-image="img/ZsMwlm2-yellowish.jpg">
             <h3>Alignment</h3>
             <ul>

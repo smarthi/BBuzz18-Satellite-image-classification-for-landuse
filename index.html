@@ -77,6 +77,9 @@
         </section>
                 <section data-background-image="img/ZsMwlm2-purpleish.jpg">
                     <h3>Data: Sentinel-2</h3>
+                    <ul>
+
+                    </ul>
                     <p style='text-align: left'>Earth observation mission from ESA</p>
                     <p style='text-align: left'>13 spectral bands, from RGB to SWIR (Short Wave Infrared)</p>
                     <p style='text-align: left'>Spatial resolution: 10m/px (RGB bands)</p>
@@ -189,6 +192,34 @@
                 <li>Best Architecture for tasks like this</li>
             </ul>
             <p style="font-size: 35%;"><i>O. Ronneberger, P.Fischer, and T. Brox. U-net: Convolutional networks for biomedical image segmentation. arxiv:1505.04597, 2015</i></p>
+        </section>
+        <section data-background-image="img/ZsMwlm2-purpleish.jpg">
+            <h4>U-Net Architecture</h4>
+            <div style="background: #c9c9c9;">
+                <img src='img/slide18.png' style='margin: 0px, 20px, 0px, 20px; border: none; background: none;box-shadow: none; '/><br/>
+            </div>
+        </section>
+        <section data-background-image="img/ZsMwlm2-yellowish.jpg">
+            <h3>U-Net Building Blocks</h3>
+            <pre><code data-trim data-noescape>
+                def conv_block(channels, kernel_size):
+                   out = nn.HybridSequential()
+                   out.add(
+                       nn.Conv2D(channels, kernel_size, padding=1, use_bias=False),
+                       nn.BatchNorm(),
+                       nn.Activation('relu')
+                   )
+                   return out
+            </code></pre>
+            <pre><code data-trim data-noescape>
+                def down_block(channels):
+                   out = nn.HybridSequential()
+                   out.add(
+                       conv_block(channels, 3),
+                       conv_block(channels, 3)
+                   )
+                   return out
+            </code></pre>
         </section>
         <section data-background-image="img/ZsMwlm2-yellowish.jpg">
             <h3>Alignment</h3>

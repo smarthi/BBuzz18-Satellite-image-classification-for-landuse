@@ -222,6 +222,31 @@
             </code></pre>
         </section>
         <section data-background-image="img/ZsMwlm2-yellowish.jpg">
+            <h3>U-Net Building Blocks (2)</h3>
+            <pre><code data-trim data-noescape>
+                class up_block(nn.HybridBlock):
+                   def __init__(self, channels, shrink=True, **kwargs):
+                       super(up_block, self).__init__(**kwargs)
+                       self.upsampler = nn.Conv2DTranspose(channels=channels, kernel_size=4,
+                                                            strides=2, padding=1, use_bias=False)
+                       self.conv1 = conv_block(channels, 1)
+                       self.conv3_0 = conv_block(channels, 3)
+                       if shrink:
+                           self.conv3_1 = conv_block(int(channels/2), 3)
+                       else:
+                           self.conv3_1 = conv_block(channels, 3)
+                   def hybrid_forward(self, F, x, s):
+                       x = self.upsampler(x)
+                       x = self.conv1(x)
+                       x = F.relu(x)
+                       x = F.Crop(*[x,s], center_crop=True)
+                       x = s + x
+                       x = self.conv3_0(x)
+                       x = self.conv3_1(x)
+                       return x
+            </code></pre>
+        </section>
+        <section data-background-image="img/ZsMwlm2-yellowish.jpg">
             <h3>Alignment</h3>
             <ul>
                 <li>In a parallel text (or when we translate), we align words in one language with the word in the other<br/>

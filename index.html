@@ -291,72 +291,6 @@ p.rotate(probability=0.75, max_rotation=20)
                         </tbody>
                     </table>
                 </section>
-        <section data-background-image="img/ZsMwlm2-yellowish.jpg">
-            <h3>Alignment</h3>
-            <ul>
-                <li>In a parallel text (or when we translate), we align words in one language with the word in the other<br/>
-                    <table>
-                        <tr>
-                            <td>Das</td><td>Geb&auml;ude</td><td>ist</td><td>hoch</td>
-                        </tr>
-                        <tr>
-                            <td style='text-align: center;'>&darr;</td><td style='text-align: center;'>&darr;</td><td style='text-align: center;'>&darr;</td><td style='text-align: center;'>&darr;</td>
-                        </tr>
-                        <tr>
-                            <td>the</td><td>building</td><td>is</td><td>high</td>
-                        </tr>
-                    </table>
-                </li>
-                <li>Word positions are numbered 1&mdash;4</li>
-            </ul>
-        </section>
-        <section data-background-image="img/ZsMwlm2-yellowish.jpg">
-            <h3>Alignment Function</h3>
-            <ul>
-                <li>Define the Alignment with an Alignment Function</li>
-                <li>Mapping an English target word at position <code>i</code> to <code>a</code> German source word at position <code>j</code> with a function <code>a : i &rarr; j</code></li>
-                <li>Example</li>
-            </ul>
-            <pre><code data-trim data-noescape>a : {1 &rarr; 1, 2 &rarr; 2, 3 &rarr; 3, 4 &rarr; 4}</code></pre>
-        </section>
-        <section data-background-image="img/ZsMwlm2-blueish.jpg">
-            <h3>One-to-Many Translation</h3>
-            <p>A source word could translate into multiple target words</p>
-            <table>
-                <tr>
-                    <td>Das</td><td>ist</td><td>ein</td><td colspan='3' style='text-align: center;'>Hochhaus&nbsp;&nbsp;&nbsp;</td>
-                </tr>
-                <tr>
-                    <td style='text-align: center;'>&darr;</td><td style='text-align: center;'>&darr;</td><td style='text-align: center;'>&darr;</td><td style='text-align: center;'>&#8601;</td><td style='text-align: center;'>&darr;</td><td style='text-align: center;'>&#8600;</td>
-                </tr>
-                <tr>
-                    <td>This</td><td>is</td><td>a</td><td>high&nbsp;&nbsp;&nbsp;</td><td>rise</td><td>building</td>
-                </tr>
-            </table>
-        </section>
-        <section data-background-image="img/ZsMwlm2-redish.jpg">
-            <h3>Phrase-based Translation</h3>
-        </section>
-        <section data-background-image="img/ZsMwlm2-redish.jpg">
-            <h3>Phrase-Based Model</h3>
-            <table style='font-size: 80%;'>
-                <tr>
-                    <td>Berlin</td><td>ist</td><td>ein</td><td>herausragendes</td><td>Kunst- und Kulturzentrum</td><td>.</td>
-                </tr>
-                <tr>
-                    <td style='text-align: center;'>&darr;</td><td style='text-align: center;'>&darr;</td><td style='text-align: center;'>&darr;</td><td style='text-align: center;'>&darr;</td><td style='text-align: center;'>&darr;</td><td style='text-align: center;'>&darr;</td>
-                </tr>
-                <tr>
-                    <td>Berlin</td><td>is</td><td>an</td><td>outstanding</td><td>Art and cultural center</td><td>.</td>
-                </tr>
-            </table>
-            <br/>
-            <ul>
-                <li>Foreign input is segmented in phrases</li>
-                <li>Each phrase is translated into English</li>
-                <li>Phrases are reordered</li>
-            </ul>
-        </section>
         <section data-background-image="img/ZsMwlm2-redish.jpg">
             <h4>Example Data Augmentation</h4>
             <div style="background: #c9c9c9;">
@@ -385,32 +319,6 @@ p.rotate(probability=0.75, max_rotation=20)
             <p style="font-size: 35%;"><i>https://www.kaggle.com/c/dstl-satellite-imagery-feature-detection/discussion/29790</i></p>
         </section>
 
-        <section data-background-image="img/ZsMwlm2-redish.jpg">
-          <h3>TVM</h3>
-            <p style='font-size: 75%;'>TVM is a Tensor intermediate representation(IR) stack for deep learning systems. It is designed to close the gap between the productivity-focused deep learning frameworks, and the performance- and efficiency-focused hardware backends. TVM works with deep learning frameworks to provide end to end compilation to different backends. </p>
-            <p style='font-size: 50%;'>https://github.com/dmlc/tvm</p>
-        </section>
-        <section data-background-image="img/ZsMwlm2-redish.jpg">
-          <h3>Alibaba TVM Optimization</h3>
-            <img src='img/transformer.png' style='width: 300px; border: none; background: none;box-shadow: none; '/>
-            <p style='font-size: 50%;'>http://tvmlang.org/2018/03/23/nmt-transformer-optimize.html</p>
-        </section>
-        <section data-background-image="img/ZsMwlm2-redish.jpg">
-          <h3>Alibaba TVM Optimization</h3>
-            <img src='img/tvm_speedup.png' style='width: 400px; border: none; background: none;box-shadow: none; '/>
-        </section>
-        <section data-background-image="img/ZsMwlm2-redish.jpg">
-          <h3>Facebook - Tensor Comprehensions</h3><br/>
-          <img src='img/tc_evol_slower.gif' style='width: 400px; border: none; background: none;box-shadow: none; '/><br/>
-          <p style='font-size: 50%;'>https://research.fb.com/announcing-tensor-comprehensions/</p>
-        </section>
-        <section data-background-image="img/ZsMwlm2-purpleish.jpg">
-            <h3>Streaming Pipelines for Satellite Image Classification</h3>
-        </section>
-        <section data-background-image="img/ZsMwlm2-greenish.jpg">
-            <h3>Complete Pipeline (Flink)</h3>
-            <img src='img/Complete-pipeline.png' style='max-width: 80%; border: none; background: none;box-shadow: none; '/>
-        </section>
         <section data-background-image="img/ZsMwlm2-greenish.jpg">
             <h3>NMT Inference Pipeline</h3>
             <img src='img/pipeline.png' style='max-width: 80%; border: none; background: none;box-shadow: none; '/>
@@ -440,14 +348,7 @@ p.rotate(probability=0.75, max_rotation=20)
         <section data-background-image="img/ZsMwlm2.jpg">
           <h2>Questions ???</h2>
         </section>
-        <section data-background-image="img/ZsMwlm2-redish.jpg">
-          <h3>Sockeye Model Types</h3>
-          <ul>
-              <li>RNN Models</li>
-              <li>Convolutional Models</li>
-              <li>Transformer Models</li>
-          </ul>
-        </section>
+
 			</div>
 		</div>
 

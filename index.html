@@ -77,31 +77,6 @@
             </div>
         </section>
         <section data-background-image="img/ZsMwlm2-greenish.jpg">
-           <h3>Statistical Machine Translation</h3>
-            <p style='text-align: left'>Generate Translations from Statistical Models trained on Bilingual Corpora.</p>
-            <p style='text-align: left'>Translation happens per a probability distribution <code>p(e|f)</code></p>
-            <pre><code data-trim data-noescape>E = string in the target language (English)
-
-F = string in the source language (Spanish)
-
-e~ = argmax  p(e|f) = argmax p(f|e) * p(e)
-
-e~ = best translation, the one with highest probability</code></pre>
-        </section>
-        <section data-background-image="img/ZsMwlm2-greenish.jpg">
-            <h3>Word-based Translation</h3>
-        </section>
-        <section data-background-image="img/ZsMwlm2-greenish.jpg">
-            <dl>
-                <dt>How to translate a word &rarr; lookup in dictionary</dt>
-                <dd>Ge­b&auml;u­de — building, house, tower.</dd>
-                <br/>
-                <dt>Multiple translations</dt>
-                <dd>some more frequent than others<br/>
-                    for instance: house and building most common</dd>
-            </dl>
-        </section>
-        <section data-background-image="img/ZsMwlm2-greenish.jpg">
             <p>Cloud Filtering: Training data(2)</p>
             <table>
                 <thead>
@@ -123,6 +98,12 @@ e~ = best translation, the one with highest probability</code></pre>
             </table>
             <p>Only two classes: clear and cloudy (cloudy = haze + partly cloudy + cloudy) </p>
         </section>
+        <section data-background-image="img/ZsMwlm2-purpleish.jpg">
+            <h4>Training data split</h4>
+            <div style="background: #c9c9c9;">
+                <img src='img/slide12.png' style='margin: 0px, 20px, 0px, 20px; border: none; background: none;box-shadow: none; '/><br/>
+            </div>
+        </section>
         <section data-background-image="img/ZsMwlm2-greenish.jpg">
             <p>Results</p>
             <table>
@@ -141,6 +122,12 @@ e~ = best translation, the one with highest probability</code></pre>
                 </tbody>
             </table>
             <p>Choose ResNet50 for filtering cloudy images</p>
+        </section>
+        <section data-background-image="img/ZsMwlm2-purpleish.jpg">
+            <h4>Example Results</h4>
+            <div style="background: #c9c9c9;">
+                <img src='img/slide14.png' style='margin: 0px, 20px, 0px, 20px; border: none; background: none;box-shadow: none; '/><br/>
+            </div>
         </section>
         <section data-background-image="img/ZsMwlm2-yellowish.jpg">
             <h3>Alignment</h3>

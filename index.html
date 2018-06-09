@@ -171,6 +171,33 @@
                 <img src='img/slide14.png' style='margin: 0px, 20px, 0px, 20px; border: none; background: none;box-shadow: none; '/><br/>
             </div>
         </section>
+        <section data-background-image="img/ZsMwlm2-yellowish.jpg">
+            <h3>Data Augmentation
+            </h3>
+
+            <img src='img/slide-aug.png' style='margin: 0px, 20px, 0px, 20px; border: none; background: none;box-shadow: none; '/><br/>
+
+            <pre><code data-trim data-noescape>
+                import Augmentor
+
+                p = Augmentor.Pipeline(img_dir)
+
+                p.skew(probability=0.5, magnitude=0.5)
+                p.shear(probability=0.3, max_shear=15)
+                p.flip_left_right(probability=0.5)
+                p.flip_top_bottom(probability=0.5)
+                p.rotate_random_90(probability=0.75)
+                p.rotate(probability=0.75, max_rotation=20)
+            </code></pre>
+
+            </table>
+        </section>
+        <section data-background-image="img/ZsMwlm2-redish.jpg">
+            <h4>Example Data Augmentation</h4>
+            <div style="background: #c9c9c9;">
+                <img src='img/DataAugmentation.png' style='margin: 0px, 20px, 0px, 20px; border: none; background: none;box-shadow: none; '/><br/>
+            </div>
+        </section>
         <section data-background-image="img/ZsMwlm2-purpleish.jpg">
             <h4>Workflow</h4>
             <div style="background: #c9c9c9;">
@@ -264,32 +291,6 @@
                     </tr>
                 </tbody>
             </table>
-        </section>
-                <section data-background-image="img/ZsMwlm2-yellowish.jpg">
-                    <h3>Data Augmentation
-                    </h3>
-
-                              <img src='img/slide-aug.png' style='margin: 0px, 20px, 0px, 20px; border: none; background: none;box-shadow: none; '/><br/>
-
-                                <pre><code data-trim data-noescape>import Augmentor
-
-p = Augmentor.Pipeline(img_dir)
-
-p.skew(probability=0.5, magnitude=0.5)
-p.shear(probability=0.3, max_shear=15)
-p.flip_left_right(probability=0.5)
-p.flip_top_bottom(probability=0.5)
-p.rotate_random_90(probability=0.75)
-p.rotate(probability=0.75, max_rotation=20)
- </code></pre>
-
-                    </table>
-                </section>
-        <section data-background-image="img/ZsMwlm2-redish.jpg">
-            <h4>Example Data Augmentation</h4>
-            <div style="background: #c9c9c9;">
-                <img src='img/DataAugmentation.png' style='margin: 0px, 20px, 0px, 20px; border: none; background: none;box-shadow: none; '/><br/>
-            </div>
         </section>
         <section data-background-image="img/ZsMwlm2-purpleish.jpg">
             <h4>Loss function: Soft Dice Coefficient loss</h4>

@@ -371,9 +371,37 @@
                             beam.ParDo(UNetInference.UNetInferenceFn(known_args.models, known_args.output))
             </code></pre>
         </section>
-        <section data-background-image="img/buzzwords_2017-purpleish.png">
-            <h3>Inference Pipeline</h3>
-            <img src='img/pipeline.png' style='max-width: 80%; border: none; background: none;box-shadow: none; '/>
+        <section>
+            <h3>Cloud Classifier DoFn</h3>
+            <pre><code data-trim data-noescape>
+                class FilterCloudyFn(apache_beam.DoFn):
+
+                def process(self, element):
+                """
+                Returns clear images after filtering the cloudy ones
+                :param element:
+                :return:
+                """
+                clear_images = []
+                batch = self.load_batch(element)
+                batch = batch.as_in_context(self.ctx)
+                preds = mx.nd.argmax(self.net(batch), axis=1)
+                idxs = np.arange(len(element))[preds.asnumpy() == 0]
+                clear_images.extend([element[i] for i in idxs])
+                yield clear_images
+            </code></pre>
+        </section>
+        <section>
+            <h3>U-Net Segmentation DoFn</h3>
+            <pre><code data-trim data-noescape>
+                class UNetInferenceFn(apache_beam.DoFn):
+
+                    def save_batch(self, filenames, predictions):
+                        for idx, fn in enumerate(filenames):
+                            base, ext = os.path.splitext(os.path.basename(fn))
+                            mask_name = base + "_predicted_mask" + ext
+                            imsave(os.path.join(self.output, mask_name) , predictions[idx].asnumpy())
+            </code></pre>
         </section>
         <section data-background-image="img/buzzwords_2017-blueish.png">
           <h3>Credits</h3>

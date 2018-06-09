@@ -350,7 +350,27 @@
             </div>
         </section>
         <section data-background-image="img/buzzwords_2017-purpleish.png">
-            <h3>NMT Inference Pipeline</h3>
+            <h3>Inference Pipeline</h3>
+            <img src='img/pipeline.png' style='max-width: 80%; border: none; background: none;box-shadow: none; '/>
+        </section>
+        <section data-background-image="img/buzzwords_2017-purpleish.png">
+            <h3>Beam Inference Pipeline</h3>
+            <pre><code data-trim data-noescape>
+                pipeline_options = PipelineOptions(pipeline_args)
+                pipeline_options.view_as(SetupOptions).save_main_session = True
+                pipeline_options.view_as(StandardOptions).streaming = True
+
+                with beam.Pipeline(options=pipeline_options) as p:
+                    filtered_images = (p | "Read Images" >> beam.Create(glob.glob(known_args.input + '*wms*' + '.png'))
+                    | "Batch elements" >> beam.BatchElements(0, known_args.batchsize)
+                    | "Filter Cloudy images" >> beam.ParDo(FilterCloudyFn.FilterCloudyFn(known_args.models)))
+
+                filtered_images | "Segment for Land use" >>
+                            beam.ParDo(UNetInference.UNetInferenceFn(known_args.models, known_args.output))
+            </code></pre>
+        </section>
+        <section data-background-image="img/buzzwords_2017-purpleish.png">
+            <h3>Inference Pipeline</h3>
             <img src='img/pipeline.png' style='max-width: 80%; border: none; background: none;box-shadow: none; '/>
         </section>
         <section data-background-image="img/buzzwords_2017-blueish.png">
